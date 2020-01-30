@@ -1,0 +1,16 @@
+{
+  "name": "encountergen",
+  "version": "1.0.0",
+  "description": "An encounter generator for DND 5e",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cham/encountergen.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
