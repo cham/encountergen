@@ -20,19 +20,38 @@
             outlined
           />
         </v-col>
+        <v-col cols="4">
+          <v-btn
+            class="mt-2"
+            color="primary"
+            @click="showPartyModal = true"
+          >
+            Set party size
+          </v-btn>
+        </v-col>
       </v-row>
     </v-form>
+    <v-dialog v-model="showPartyModal" width="500">
+      <v-card class="pa-4">
+        <party-size/>
+      </v-card>
+    </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import PartySize from '@/components/filters/PartySize'
 
 export default {
   name: 'EncounterFilters',
+  components: {
+    PartySize
+  },
   data: () => ({
     selectedEnvironment: 'Any',
-    selectedMonsterType: 'Any'
+    selectedMonsterType: 'Any',
+    showPartyModal: false
   }),
   computed: mapState('filters', [
     'environments',
