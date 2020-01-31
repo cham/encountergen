@@ -2,6 +2,9 @@ import * as types from '../../types'
 
 const calculateChallengeXp = (party, thresholds) => {
   return party.reduce((memo, partyItem) => {
+    if (!partyItem.level) {
+      return memo
+    }
     memo.easy += thresholds[partyItem.level].easy * partyItem.players
     memo.medium += thresholds[partyItem.level].medium * partyItem.players
     memo.hard += thresholds[partyItem.level].hard * partyItem.players
