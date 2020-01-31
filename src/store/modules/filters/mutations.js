@@ -15,6 +15,15 @@ const calculateChallengeXp = (party, thresholds) => {
 
 const calculateTotalPlayers = party => party.reduce((memo, partyItem) => memo + partyItem.players, 0)
 
+const calculateMultiplierShift = totalPlayers => totalPlayers < 3 ? 1 : (totalPlayers > 5 ? -1 : 0)
+
+const updateParty = (state, party) => {
+  const challengeXp = calculateChallengeXp(party, state.levelXpThreshold)
+  const totalPlayers = calculateTotalPlayers(party)
+  const multiplierShift = calculateMultiplierShift(totalPlayers)
+  state = Object.assign(state, { party, challengeXp, totalPlayers, multiplierShift })
+}
+
 export default {
   [types.FILTERS_SET_PARTY_ITEM] (state, { id, players, level }) {
     const party = state.party
@@ -24,9 +33,7 @@ export default {
         partyItem.level = level
       }
     })
-    const challengeXp = calculateChallengeXp(party, state.levelXpThreshold)
-    const totalPlayers = calculateTotalPlayers(party)
-    state = Object.assign(state, { party, challengeXp, totalPlayers })
+    updateParty(state, party)
   },
   [types.FILTERS_ADD_PARTY_ITEM] (state) {
     const maxId = state.party.reduce((memo, partyItem) => {
@@ -34,14 +41,11 @@ export default {
     }, -Infinity)
     const party = state.party
     party.push({ id: maxId + 1, players: null, level: null })
-    const totalPlayers = calculateTotalPlayers(party)
-    state = Object.assign(state, { party, totalPlayers })
+    state = Object.assign(state, { party })
   },
   [types.FILTERS_DELETE_PARTY_ITEM] (state, { id }) {
     let party = state.party
     party = party.filter(p => p.id !== id)
-    const challengeXp = calculateChallengeXp(party, state.levelXpThreshold)
-    const totalPlayers = calculateTotalPlayers(party)
-    state = Object.assign(state, { party, challengeXp, totalPlayers })
+    updateParty(state, party)
   }
 }

@@ -32,9 +32,24 @@
         <small>{{challengeXp.deadly}}XP</small>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="multiplierShift === 1">
       <v-col class="pa-0">
-        <small>Monster XP multiplier shift, from party size: {{multiplierShift}}</small>
+        <p class="ma-0">
+          <small>Monster XP multiplier has been <strong>increased</strong> as there are less than 3 players</small>
+        </p>
+        <p class="ma-0">
+          <small>You will get <strong>less</strong> monsters as a result!</small>
+        </p>
+      </v-col>
+    </v-row>
+    <v-row v-if="multiplierShift === -1">
+      <v-col class="pa-0">
+        <p class="ma-0">
+          <small>Monster XP multiplier has been <strong>decreased</strong> as there are more than 5 players</small>
+        </p>
+        <p class="ma-0">
+          <small>You will get <strong>more</strong> monsters as a result!</small>
+        </p>
       </v-col>
     </v-row>
   </div>
