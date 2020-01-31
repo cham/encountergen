@@ -10,7 +10,7 @@
     <v-row justify="center">
       <v-btn @click="addPartyItem" color="primary">And...</v-btn>
     </v-row>
-    <challenge-x-p-list />
+    <challenge-x-p-list v-if="totalPlayers > 0" />
   </v-container>
 </template>
 
@@ -26,7 +26,8 @@ export default {
     ChallengeXPList
   },
   computed: mapState('filters', [
-    'party'
+    'party',
+    'totalPlayers'
   ]),
   methods: mapActions('filters', [
     'addPartyItem'

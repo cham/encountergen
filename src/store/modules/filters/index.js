@@ -12,6 +12,7 @@ const state = {
       id: 1
     }
   ],
+  totalPlayers: 0,
   challengeXp: {
     easy: 0,
     medium: 0,

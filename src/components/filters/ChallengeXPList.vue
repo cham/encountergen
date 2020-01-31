@@ -1,17 +1,42 @@
 <template>
   <div>
-    <p class="pa-0 mb-1">
-      <small>Easy: {{challengeXp.easy}}XP</small>
-    </p>
-    <p class="pa-0 mb-1">
-      <small>Medium: {{challengeXp.medium}}XP</small>
-    </p>
-    <p class="pa-0 mb-1">
-      <small>Hard: {{challengeXp.hard}}XP</small>
-    </p>
-    <p class="pa-0 mb-1">
-      <small>Deadly: {{challengeXp.deadly}}XP</small>
-    </p>
+    <v-row>
+      <v-col class="pa-0" cols="3">
+        <small>Easy</small>
+      </v-col>
+      <v-col class="pa-0">
+        <small>{{challengeXp.easy}}XP</small>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="pa-0" cols="3">
+        <small>Medium</small>
+      </v-col>
+      <v-col class="pa-0">
+        <small>{{challengeXp.medium}}XP</small>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="pa-0" cols="3">
+        <small>Hard</small>
+      </v-col>
+      <v-col class="pa-0">
+        <small>{{challengeXp.hard}}XP</small>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="pa-0" cols="3">
+        <small>Deadly</small>
+      </v-col>
+      <v-col class="pa-0">
+        <small>{{challengeXp.deadly}}XP</small>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col class="pa-0">
+        <small>Monster XP multiplier shift, from party size: {{multiplierShift}}</small>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -21,7 +46,8 @@ import { mapState } from 'vuex'
 export default {
   name: 'ChallengeXPList',
   computed: mapState('filters', [
-    'challengeXp'
+    'challengeXp',
+    'multiplierShift'
   ])
 }
 </script>
