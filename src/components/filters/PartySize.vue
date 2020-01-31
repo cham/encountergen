@@ -7,26 +7,26 @@
       :level="partyItem.level"
       :id="partyItem.id"
     />
-    <v-btn @click="addPartyItem">And...</v-btn>
-    <p>Easy: {{challengeXp.easy}}XP</p>
-    <p>Medium: {{challengeXp.medium}}XP</p>
-    <p>Hard: {{challengeXp.hard}}XP</p>
-    <p>Deadly: {{challengeXp.deadly}}XP</p>
+    <v-row justify="center">
+      <v-btn @click="addPartyItem" color="primary">And...</v-btn>
+    </v-row>
+    <challenge-x-p-list />
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import PartySizeItem from '@/components/filters/PartySizeItem'
+import ChallengeXPList from '@/components/filters/ChallengeXPList'
 
 export default {
   name: 'PartySize',
   components: {
-    PartySizeItem
+    PartySizeItem,
+    ChallengeXPList
   },
   computed: mapState('filters', [
-    'party',
-    'challengeXp'
+    'party'
   ]),
   methods: mapActions('filters', [
     'addPartyItem'

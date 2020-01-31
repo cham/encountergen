@@ -1,20 +1,21 @@
 <template>
   <v-form
     v-model="valid"
+    ref="form"
   >
     <v-row align="center">
-      <v-col>
+      <v-col cols="4">
         <v-text-field
           v-model="p_players"
           single-line
-          label="Number of players"
+          label="Players"
           prepend-icon="people"
           type="number"
           :min="1"
           :max="20"
           :rules="[rules.required, rules.positive, rules.max(20)]"
           autocomplete="new-password"
-          style="width:180px"
+          style="width:140px"
           @change="onChange"
         />
       </v-col>
@@ -31,16 +32,27 @@
           :max="20"
           :rules="[rules.required, rules.positive, rules.max(20)]"
           autocomplete="new-password"
-          style="width:180px"
+          style="width:100px"
           @change="onChange"
         />
       </v-col>
+      <v-btn
+        v-if="party.length > 1"
+        fab
+        small
+        dark
+        color="red"
+        class="elevation-0"
+        @click="onDelete"
+      >
+        <v-icon>delete</v-icon>
+      </v-btn>
     </v-row>
   </v-form>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'PartySizeItem',
@@ -66,9 +78,13 @@ export default {
       max: ceil => v => v <= ceil || `Must be ${ceil} or less`,
     }
   }),
+  computed: mapState('filters', [
+    'party'
+  ]),
   methods: {
     ...mapActions('filters', [
-      'setPartyItem'
+      'setPartyItem',
+      'deletePartyItem'
     ]),
     onChange() {
       if (!this.valid) {
@@ -79,6 +95,9 @@ export default {
         players: parseInt(this.p_players),
         level: parseInt(this.p_level)
       })
+    },
+    onDelete () {
+      this.deletePartyItem({ id: this.id })
     }
   },
   watch: {

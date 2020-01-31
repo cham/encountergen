@@ -1,0 +1,17 @@
+{
+  "environments": [
+    "Any",
+    "Arctic",
+    "Coastal",
+    "Desert",
+    "Forest",
+    "Grassland",
+    "Hill",
+    "Jungle",
+    "Mountain",
+    "Swamp",
+    "Underdark",
+    "Underwater",
+    "Urban"
+  ]
+}

@@ -29,5 +29,11 @@ export default {
     const party = state.party
     party.push({ id: maxId + 1, players: null, level: null })
     state = Object.assign(state, { party })
+  },
+  [types.FILTERS_DELETE_PARTY_ITEM] (state, { id }) {
+    let party = state.party
+    party = party.filter(p => p.id !== id)
+    const challengeXp = calculateChallengeXp(party, state.levelXpThreshold)
+    state = Object.assign(state, { party, challengeXp })
   }
 }
