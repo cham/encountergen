@@ -8,7 +8,14 @@
       :id="partyItem.id"
     />
     <v-row justify="center">
-      <v-btn @click="addPartyItem" color="primary">And...</v-btn>
+      <v-btn
+        text
+        outlined
+        dark
+        @click="addPartyItem"
+      >
+        And...
+      </v-btn>
     </v-row>
     <challenge-x-p-list v-if="totalPlayers > 0" />
   </v-container>

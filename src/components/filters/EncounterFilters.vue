@@ -1,6 +1,7 @@
 <template>
   <v-app-bar
     class="pt-4"
+    dark
   >
     <v-form>
       <v-row>
@@ -23,7 +24,9 @@
         <v-col cols="4">
           <v-btn
             class="mt-2"
-            color="primary"
+            text
+            outlined
+            dark
             @click="showPartyModal = true"
           >
             Set party size
@@ -32,7 +35,7 @@
       </v-row>
     </v-form>
     <v-dialog v-model="showPartyModal" width="500">
-      <v-card class="pa-4">
+      <v-card dark class="pa-4">
         <party-size/>
       </v-card>
     </v-dialog>
