@@ -4,7 +4,7 @@
       <div class="background">
         <div class="background-fade"/>
       </div>
-      <router-view/>
+      <router-view class="foreground"/>
     </v-content>
   </v-app>
 </template>
@@ -17,8 +17,9 @@ export default {
 
 <style scoped>
 .background,
+.foreground,
 .background-fade {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -30,5 +31,11 @@ export default {
 .background {
   background-image: url('./assets/background.jpg');
   background-size: cover;
+  z-index: 0;
+}
+.foreground {
+  position: absolute;
+  top: 64px;
+  z-index: 1;
 }
 </style>

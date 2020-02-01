@@ -47,5 +47,11 @@ export default {
     let party = state.party
     party = party.filter(p => p.id !== id)
     updateParty(state, party)
+  },
+  [types.FILTERS_SET_ENVIRONMENT] (state, { environment }) {
+    state = Object.assign(state, { environment })
+  },
+  [types.FILTERS_SET_MONSTER_TYPE] (state, { monsterType }) {
+    state = Object.assign(state, { monsterType })
   }
 }

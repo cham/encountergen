@@ -2,6 +2,7 @@
   <v-app-bar
     class="pt-4"
     dark
+    fixed
   >
     <v-form>
       <v-row>
@@ -11,6 +12,7 @@
             :items="environments"
             v-model="selectedEnvironment"
             outlined
+            @change="setEnvironment({ environment: selectedEnvironment })"
           />
         </v-col>
         <v-col>
@@ -19,6 +21,7 @@
             :items="monsterTypes"
             v-model="selectedMonsterType"
             outlined
+            @change="setMonsterType({ monsterType: selectedMonsterType })"
           />
         </v-col>
         <v-col cols="4">
@@ -43,7 +46,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import PartySize from '@/components/filters/PartySize'
 
 export default {
@@ -59,6 +62,10 @@ export default {
   computed: mapState('filters', [
     'environments',
     'monsterTypes'
+  ]),
+  methods: mapActions('filters', [
+    'setEnvironment',
+    'setMonsterType'
   ])
 }
 </script>

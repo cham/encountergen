@@ -20,6 +20,8 @@ const state = {
     deadly: 0
   },
   multiplierShift: 0,
+  environment: '',
+  monsterType: '',
   levelXpThreshold,
   environments,
   monsterTypes
