@@ -1,26 +1,25 @@
 <template>
   <div class="encounterslist">
-    <p
-      v-for="monster in filteredMonsters"
-      :key="`monster-${monster.name}-${monster.xp}`"
-      style="color:#fff"
-    >
-      {{monster.name}} - {{monster.xp}}
-      <span      v-if="monster.easy">Easy</span>
-      <span v-else-if="monster.medium">Medium</span>
-      <span v-else-if="monster.hard">Hard</span>
-      <span v-else-if="monster.deadly">Deadly</span>
-    </p>
+    <encounter-card
+      v-for="group in encounterGroups"
+      :key="`${group.id}`"
+      :encounter="group"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import EncounterCard from '@/components/encounters/EncounterCard'
 
 export default {
   name: 'EncountersList',
+  components: {
+    EncounterCard
+  },
   computed: mapState('monsters', [
-    'filteredMonsters'
+    'filteredMonsters',
+    'encounterGroups'
   ])
 }
 </script>

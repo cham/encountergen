@@ -9,8 +9,9 @@ const calculateChallengeXp = (party, thresholds) => {
     memo.medium += thresholds[partyItem.level].medium * partyItem.players
     memo.hard += thresholds[partyItem.level].hard * partyItem.players
     memo.deadly += thresholds[partyItem.level].deadly * partyItem.players
+    memo.maximum += thresholds[partyItem.level].maximum * partyItem.players
     return memo
-  }, { easy: 0, medium: 0, hard: 0, deadly: 0 })
+  }, { easy: 0, medium: 0, hard: 0, deadly: 0, maximum: 0 })
 }
 
 const calculateTotalPlayers = party => party.reduce((memo, partyItem) => memo + partyItem.players, 0)
