@@ -6,7 +6,7 @@
   >
     <v-form style="width:100%">
       <v-row>
-        <v-col cols="3">
+        <v-col cols="2">
           <v-select
             label="Environment"
             :items="environments"
@@ -15,7 +15,7 @@
             @change="setEnvironment({ environment: selectedEnvironment })"
           />
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
           <v-select
             label="Monster type"
             :items="monsterTypes"
@@ -25,6 +25,16 @@
           />
         </v-col>
         <v-col cols="3">
+          <v-text-field
+            v-model="query"
+            label="Search"
+            type="text"
+            autocomplete="new-password"
+            outlined
+            @change="setSearch({ query })"
+          />
+        </v-col>
+        <v-col cols="2">
           <v-btn
             class="mt-2"
             text
@@ -67,6 +77,7 @@ export default {
   data: () => ({
     selectedEnvironment: 'Any',
     selectedMonsterType: 'Any',
+    query: '',
     showPartyModal: false,
     showMenu: false
   }),
@@ -76,7 +87,8 @@ export default {
   ]),
   methods: mapActions('filters', [
     'setEnvironment',
-    'setMonsterType'
+    'setMonsterType',
+    'setSearch'
   ])
 }
 </script>

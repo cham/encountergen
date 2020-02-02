@@ -57,5 +57,8 @@ export default {
   },
   [types.FILTERS_SET_SETTINGS] (state , { maxPackSize, totalMonsters }) {
     state = Object.assign(state, { maxPackSize, totalMonsters })
+  },
+  [types.FILTERS_SET_SEARCH] (state, { query }) {
+    state = Object.assign(state, { query })
   }
 }

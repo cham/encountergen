@@ -29,3 +29,7 @@ export const setSettings = ({ commit, state, dispatch }, { maxPackSize, totalMon
   commit(types.FILTERS_SET_SETTINGS, { maxPackSize, totalMonsters })
   dispatch('monsters/filter', state, { root: true })
 }
+export const setSearch = ({ commit, state, dispatch }, { query }) => {
+  commit(types.FILTERS_SET_SEARCH, { query })
+  dispatch('monsters/filter', state, { root: true })
+}

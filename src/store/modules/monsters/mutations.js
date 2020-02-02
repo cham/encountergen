@@ -22,7 +22,7 @@ const getEncounterGroups = (fn, filteredMonsters, challengeXp, maxPackSize) => {
 }
 
 export default {
-  [types.MONSTERS_SET_FILTER] (state, { challengeXp, environment, monsterType, maxPackSize, totalMonsters }) {
+  [types.MONSTERS_SET_FILTER] (state, { challengeXp, environment, monsterType, maxPackSize, totalMonsters, query }) {
     const monsters = state.monsterList
     let filteredMonsters = monsters
     if (environment && environment !== 'Any') {
@@ -30,6 +30,9 @@ export default {
     }
     if (monsterType && monsterType !== 'Any') {
       filteredMonsters = filteredMonsters.filter(monster => monster.type === monsterType)
+    }
+    if (query) {
+      filteredMonsters = filteredMonsters.filter(monster => monster.name.toLowerCase().indexOf(query.toLowerCase()) > -1)
     }
     filteredMonsters = filteredMonsters
       .filter(m => m.xp <= challengeXp.deadly && m.xp > 0)

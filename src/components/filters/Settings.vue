@@ -5,8 +5,8 @@
       label="Maximum pack size"
       type="number"
       :min="1"
-      :max="20"
-      :rules="[rules.required, rules.positive, rules.max(20)]"
+      :max="100"
+      :rules="[rules.required, rules.positive, rules.max(100)]"
       autocomplete="new-password"
       style="width:280px"
       outlined
@@ -17,8 +17,8 @@
       label="Maximum encounter size"
       type="number"
       :min="1"
-      :max="20"
-      :rules="[rules.required, rules.positive, rules.max(20), rules.min(p_maxPackSize)]"
+      :max="100"
+      :rules="[rules.required, rules.positive, rules.max(100), rules.min(p_maxPackSize)]"
       autocomplete="new-password"
       style="width:280px"
       outlined

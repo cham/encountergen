@@ -27,6 +27,7 @@ const state = {
   monsterType: '',
   maxPackSize: 5,
   totalMonsters: 5,
+  query: '',
   levelXpThreshold,
   environments,
   monsterTypes
