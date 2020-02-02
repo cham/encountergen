@@ -24,3 +24,8 @@ export const setMonsterType = ({ commit, state, dispatch }, { monsterType }) => 
   commit(types.FILTERS_SET_MONSTER_TYPE, { monsterType })
   dispatch('monsters/filter', state, { root: true })
 }
+
+export const setSettings = ({ commit, state, dispatch }, { maxPackSize, totalMonsters }) => {
+  commit(types.FILTERS_SET_SETTINGS, { maxPackSize, totalMonsters })
+  dispatch('monsters/filter', state, { root: true })
+}

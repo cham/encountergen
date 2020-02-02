@@ -54,5 +54,8 @@ export default {
   },
   [types.FILTERS_SET_MONSTER_TYPE] (state, { monsterType }) {
     state = Object.assign(state, { monsterType })
+  },
+  [types.FILTERS_SET_SETTINGS] (state , { maxPackSize, totalMonsters }) {
+    state = Object.assign(state, { maxPackSize, totalMonsters })
   }
 }

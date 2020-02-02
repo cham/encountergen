@@ -4,9 +4,9 @@
     dark
     fixed
   >
-    <v-form>
+    <v-form style="width:100%">
       <v-row>
-        <v-col>
+        <v-col cols="3">
           <v-select
             label="Environment"
             :items="environments"
@@ -15,7 +15,7 @@
             @change="setEnvironment({ environment: selectedEnvironment })"
           />
         </v-col>
-        <v-col>
+        <v-col cols="3">
           <v-select
             label="Monster type"
             :items="monsterTypes"
@@ -24,7 +24,7 @@
             @change="setMonsterType({ monsterType: selectedMonsterType })"
           />
         </v-col>
-        <v-col cols="4">
+        <v-col cols="3">
           <v-btn
             class="mt-2"
             text
@@ -34,6 +34,14 @@
           >
             Set party size
           </v-btn>
+        </v-col>
+        <v-col cols="3">
+          <v-btn icon style="float:right" @click="showMenu = !showMenu">
+            <v-icon>settings</v-icon>
+          </v-btn>
+          <v-card dark class="settingsMenu pa-4" v-if="showMenu">
+            <settings/>
+          </v-card>
         </v-col>
       </v-row>
     </v-form>
@@ -48,16 +56,19 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import PartySize from '@/components/filters/PartySize'
+import Settings from '@/components/filters/Settings'
 
 export default {
   name: 'EncounterFilters',
   components: {
-    PartySize
+    PartySize,
+    Settings
   },
   data: () => ({
     selectedEnvironment: 'Any',
     selectedMonsterType: 'Any',
-    showPartyModal: false
+    showPartyModal: false,
+    showMenu: false
   }),
   computed: mapState('filters', [
     'environments',
@@ -69,3 +80,12 @@ export default {
   ])
 }
 </script>
+
+<style scoped>
+.settingsMenu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  min-width: 320px;
+}
+</style>

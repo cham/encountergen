@@ -25,6 +25,8 @@ const state = {
   multiplierShift: 0,
   environment: '',
   monsterType: '',
+  maxPackSize: 5,
+  totalMonsters: 5,
   levelXpThreshold,
   environments,
   monsterTypes

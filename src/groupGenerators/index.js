@@ -1,4 +1,3 @@
-const MAX_PACK_SIZE = 5
 const randomItemFromArray = arr => arr[Math.floor(arr.length * Math.random())]
 
 const getGroupSignature = (group, totalXp) => `${totalXp}-` + group.sort((a, b) => {
@@ -51,7 +50,7 @@ const combineSameMonsters = group => group.reduce((memo, monster) => {
   return memo
 }, [])
 
-export const topDown = (monsters, xplimit, cursor = 0, reverse) => {
+export const topDown = (monsters, xplimit, maxPackSize, cursor = 0, reverse) => {
   let group = []
   let totalXp = 0
   let maxIterations = 1000
@@ -66,7 +65,7 @@ export const topDown = (monsters, xplimit, cursor = 0, reverse) => {
       continue
     }
     let randomMonster = randomItemFromArray(monstersByXP[cursor].monsters)
-    if (group.filter(monster => monster.name === randomMonster.name && monster.xp === randomMonster.xp).length >= MAX_PACK_SIZE) {
+    if (group.filter(monster => monster.name === randomMonster.name && monster.xp === randomMonster.xp).length >= maxPackSize) {
       continue
     }
     group.push(Object.assign({}, randomMonster))
@@ -80,6 +79,6 @@ export const topDown = (monsters, xplimit, cursor = 0, reverse) => {
   }
 }
 
-export const bottomUp = (monsters, xplimit, cursor = 0) => {
-  return topDown(monsters, xplimit, cursor, true)
+export const bottomUp = (monsters, xplimit, maxPackSize, cursor = 0) => {
+  return topDown(monsters, xplimit, maxPackSize, cursor, true)
 }
