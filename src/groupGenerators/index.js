@@ -50,26 +50,47 @@ const combineSameMonsters = group => group.reduce((memo, monster) => {
   return memo
 }, [])
 
-export const topDown = (monsters, xplimit, maxPackSize, cursor = 0, reverse) => {
+export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0, reverse, cascade) => {
   let group = []
+  const packsDone = []
   let totalXp = 0
   let maxIterations = 1000
   let monstersByXP = groupMonstersByXP(monsters)
   if (reverse) {
     monstersByXP = monstersByXP.reverse()
   }
+  let randomMonster
   while (cursor < monstersByXP.length && maxIterations--) {
-    let rowXp = monstersByXP[cursor].xp
-    if ((rowXp + totalXp) * encounterMultiplier(group.length + 1) > xplimit) {
+    if (group.length >= maxTotalMonsters) {
+      break
+    }
+    const rowXp = monstersByXP[cursor].xp
+    const nextXp = (rowXp + totalXp) * encounterMultiplier(group.length + 1)
+    if (nextXp > xplimit) {
+      randomMonster = null
       cursor++
       continue
     }
-    let randomMonster = randomItemFromArray(monstersByXP[cursor].monsters)
-    if (group.filter(monster => monster.name === randomMonster.name && monster.xp === randomMonster.xp).length >= maxPackSize) {
+    if (!randomMonster) {
+      randomMonster = randomItemFromArray(monstersByXP[cursor].monsters)
+      if (packsDone.indexOf(`${randomMonster.name}${randomMonster.xp}`) > -1) {
+        randomMonster = null
+        continue
+      }
+    }
+    const packFull = group.filter(monster => monster.name === randomMonster.name && monster.xp === randomMonster.xp).length >= maxPackSize
+    if (packFull) {
+      packsDone.push(`${randomMonster.name}${randomMonster.xp}`)
+      randomMonster = null
       continue
     }
     group.push(Object.assign({}, randomMonster))
     totalXp += rowXp
+    if (cascade) {
+      randomMonster = null
+      cascade = false
+      cursor++
+    }
   }
   return {
     monsters: combineSameMonsters(group),
@@ -79,6 +100,10 @@ export const topDown = (monsters, xplimit, maxPackSize, cursor = 0, reverse) => 
   }
 }
 
-export const bottomUp = (monsters, xplimit, maxPackSize, cursor = 0) => {
-  return topDown(monsters, xplimit, maxPackSize, cursor, true)
+export const bottomUp = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0) => {
+  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, cursor, true)
+}
+
+export const cascade = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0) => {
+  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, cursor, false, true)
 }
