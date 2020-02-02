@@ -37,7 +37,13 @@ export default {
 
     const encounterGroups = getEncounterGroups(topDown, filteredMonsters, challengeXp)
       .concat(getEncounterGroups(bottomUp, filteredMonsters, challengeXp))
-      .filter(group => group.encounterXP > 0 && group.totalMonsters < 21)
+      .filter(group => group.encounterXP > 0 && group.totalMonsters <= 5)
+      .reduce((memo, group) => {
+        if (!memo.find(groupMem => groupMem.signature === group.signature)) {
+          memo.push(group)
+        }
+        return memo
+      }, [])
       .sort((a, b) => b.encounterXP - a.encounterXP)
 
     state = Object.assign(state, { filteredMonsters, encounterGroups })
