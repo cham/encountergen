@@ -1,18 +1,14 @@
 <template>
   <v-row>
-    <v-col cols="2">
+    <v-col cols="5">
       {{monster.count}} x {{monster.name}}
     </v-col>
-    <v-col cols="2">
-      {{monster.type}}
+    <v-col cols="4">
+      <p class="ma-0">{{monster.xp}}XP</p>
+      <p class="ma-0">{{monster.type}}</p>
+      <p class="ma-0">{{monster.page}}</p>
     </v-col>
-    <v-col cols="1">
-      {{monster.xp}}XP
-    </v-col>
-    <v-col cols="1">
-      {{monster.page}}
-    </v-col>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-img
         v-if="monster.img_url"
         :src="monster.img_url"

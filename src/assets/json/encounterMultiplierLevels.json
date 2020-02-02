@@ -1,0 +1,44 @@
+{
+  "encounterMultiplierLevels": [
+    {
+      "level": 1,
+      "numberOfMonsters": 0,
+      "multiplier": 0.5
+    },
+    {
+      "level": 2,
+      "numberOfMonsters": 1,
+      "multiplier": 1
+    },
+    {
+      "level": 3,
+      "numberOfMonsters": 2,
+      "multiplier": 1.5
+    },
+    {
+      "level": 4,
+      "numberOfMonsters": 3,
+      "multiplier": 2
+    },
+    {
+      "level": 5,
+      "numberOfMonsters": 7,
+      "multiplier": 2.5
+    },
+    {
+      "level": 6,
+      "numberOfMonsters": 11,
+      "multiplier": 3
+    },
+    {
+      "level": 7,
+      "numberOfMonsters": 15,
+      "multiplier": 4
+    },
+    {
+      "level": 8,
+      "numberOfMonsters": 99999999,
+      "multiplier": 5
+    }
+  ]
+}

@@ -1,11 +1,20 @@
 <template>
-  <div class="encounterslist">
-    <encounter-card
+  <v-row class="encounterslist">
+    <v-col
+      xl="3"
+      lg="4"
+      md="6"
+      sm="6"
+      cols="12"
       v-for="group in encounterGroups"
       :key="`${group.id}`"
-      :encounter="group"
-    />
-  </div>
+    >
+      <encounter-card
+        style="font-size: 14px"
+        :encounter="group"
+      />
+    </v-col>
+  </v-row>
 </template>
 
 <script>

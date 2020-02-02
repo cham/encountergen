@@ -1,3 +1,5 @@
+import { encounterMultiplierLevels } from '../assets/json/encounterMultiplierLevels.json'
+
 const randomItemFromArray = arr => arr[Math.floor(arr.length * Math.random())]
 
 const getGroupSignature = (group, totalXp) => `${totalXp}-` + group.sort((a, b) => {
@@ -20,23 +22,12 @@ const groupMonstersByXP = monsters => monsters.reduce((memo, monster) => {
   return memo
 }, [])
 
-const encounterMultiplier = (numMonsters) => {
-  if (numMonsters < 2) {
-    return 1
+const encounterMultiplier = (multiplierShift, numMonsters) => {
+  if (numMonsters < 1) {
+    return 0
   }
-  if (numMonsters < 3) {
-    return 1.5
-  }
-  if (numMonsters < 7) {
-    return 2
-  }
-  if (numMonsters < 11) {
-    return 2.5
-  }
-  if (numMonsters < 15) {
-    return 3
-  }
-  return 4
+  const applicableLevels = encounterMultiplierLevels.filter(levelData => levelData.numberOfMonsters <= numMonsters)
+  return encounterMultiplierLevels[applicableLevels.length - 1 + multiplierShift].multiplier
 }
 
 const combineSameMonsters = group => group.reduce((memo, monster) => {
@@ -50,7 +41,7 @@ const combineSameMonsters = group => group.reduce((memo, monster) => {
   return memo
 }, [])
 
-export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0, reverse, cascade) => {
+export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0, reverse, cascade) => {
   let group = []
   const packsDone = []
   let totalXp = 0
@@ -65,7 +56,7 @@ export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor
       break
     }
     const rowXp = monstersByXP[cursor].xp
-    const nextXp = (rowXp + totalXp) * encounterMultiplier(group.length + 1)
+    const nextXp = (rowXp + totalXp) * encounterMultiplier(multiplierShift, group.length + 1)
     if (nextXp > xplimit) {
       randomMonster = null
       cursor++
@@ -94,16 +85,16 @@ export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor
   }
   return {
     monsters: combineSameMonsters(group),
-    encounterXP: totalXp * encounterMultiplier(group.length),
+    encounterXP: totalXp * encounterMultiplier(multiplierShift, group.length),
     totalMonsters: group.length,
     signature: getGroupSignature(group, totalXp)
   }
 }
 
-export const bottomUp = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0) => {
-  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, cursor, true)
+export const bottomUp = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
+  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, true)
 }
 
-export const cascade = (monsters, xplimit, maxPackSize, maxTotalMonsters, cursor = 0) => {
-  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, cursor, false, true)
+export const cascade = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
+  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, false, true)
 }
