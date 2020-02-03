@@ -1,5 +1,5 @@
 import * as types from '../../types'
-import { cascade, topDown, bottomUp } from '../../../groupGenerators'
+import { cascade, ascend, topDown, bottomUp } from '../../../groupGenerators'
 
 const getEncounterGroups = (fn, filteredMonsters, challengeXp) => {
   const groups = []
@@ -38,7 +38,8 @@ export default {
       .sort((a, b) => b.xp - a.xp)
 
     const encounterGroups = getEncounterGroups(cascade, filteredMonsters, challengeXp)
-    .concat(getEncounterGroups(topDown, filteredMonsters, challengeXp))
+      .concat(getEncounterGroups(ascend, filteredMonsters, challengeXp))
+      .concat(getEncounterGroups(topDown, filteredMonsters, challengeXp))
       .concat(getEncounterGroups(bottomUp, filteredMonsters, challengeXp))
       .filter(group => group.encounterXP >= (challengeXp.easy || 1))
       .reduce((memo, group) => {

@@ -104,3 +104,7 @@ export const bottomUp = (monsters, xplimit, cursor = 0) => {
 export const cascade = (monsters, xplimit, cursor) => {
   return topDown(monsters, xplimit, cursor, false, true)
 }
+
+export const ascend = (monsters, xplimit, cursor) => {
+  return topDown(monsters, xplimit, cursor, true, true)
+}
