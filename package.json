@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "electron": "electron ."
   },
   "dependencies": {
     "core-js": "^3.4.4",
+    "electron": "7.1.11",
     "vue": "^2.6.10",
     "vue-router": "3.1.5",
     "vuetify": "^2.1.0",
