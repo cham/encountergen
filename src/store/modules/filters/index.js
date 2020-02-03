@@ -4,7 +4,7 @@ import { environments } from '../../../assets/json/environments.json'
 import { monsterTypes } from '../../../assets/json/monsterTypes.json'
 import levelXpThreshold from '../../../assets/json/levelXpThreshold.json'
 
-Object.keys(levelXpThreshold).forEach(level => levelXpThreshold[level].maximum = levelXpThreshold[level].deadly * 2)
+Object.keys(levelXpThreshold).forEach(level => levelXpThreshold[level].maximum = levelXpThreshold[level].deadly * 1.5)
 
 const state = {
   party: [

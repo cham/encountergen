@@ -41,7 +41,7 @@ const combineSameMonsters = group => group.reduce((memo, monster) => {
   return memo
 }, [])
 
-export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0, reverse, cascade) => {
+export const topDown = (monsters, totalPlayers, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0, reverse, cascade) => {
   let group = []
   const packsDone = []
   let totalXp = 0
@@ -85,16 +85,17 @@ export const topDown = (monsters, xplimit, maxPackSize, maxTotalMonsters, multip
   }
   return {
     monsters: combineSameMonsters(group),
-    encounterXP: totalXp * encounterMultiplier(multiplierShift, group.length),
+    encounterXP: Math.floor(totalXp * encounterMultiplier(multiplierShift, group.length)),
+    playerXP: Math.floor(totalXp / totalPlayers),
     totalMonsters: group.length,
     signature: getGroupSignature(group, totalXp)
   }
 }
 
-export const bottomUp = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
-  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, true)
+export const bottomUp = (monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
+  return topDown(monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, true)
 }
 
-export const cascade = (monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
-  return topDown(monsters, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, false, true)
+export const cascade = (monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
+  return topDown(monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, false, true)
 }

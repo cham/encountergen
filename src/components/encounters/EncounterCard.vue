@@ -7,6 +7,9 @@
       <v-chip v-else-if="encounter.encounterXP >= challengeXp.medium" color="yellow">Medium</v-chip>
       <v-chip v-else-if="encounter.encounterXP >= challengeXp.easy" color="green">Easy</v-chip>
     </h4>
+    <h5 color="#fff">
+      XP per player: {{encounter.playerXP}}XP
+    </h5>
     <monster-card
       v-for="monster in encounter.monsters"
       :key="`${encounter.id}-${monster.name}-${monster.xp}`"
