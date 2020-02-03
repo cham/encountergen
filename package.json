@@ -6,11 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron": "electron ."
+    "electron": "npm run build && electron .",
+    "build-package:linux": "npm run build && electron-packager . EncounterGen --overwrite --platform=linux --arch=x64 --prune=true --out=release-builds --asar",
+    "build-package:osx": "npm run build && electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds --asar",
+    "build-package:windows": "npm run build && electron-packager . EncounterGen --overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"EncounterGen\" --asar"
   },
   "dependencies": {
     "core-js": "^3.4.4",
     "electron": "7.1.11",
+    "electron-packager": "14.2.0",
     "vue": "^2.6.10",
     "vue-router": "3.1.5",
     "vuetify": "^2.1.0",
