@@ -1,13 +1,13 @@
 <template>
   <v-card class="pa-4 ma-4 mb-8">
-    <h4 color="#fff">
+    <h4>
       Encounter XP: {{encounter.encounterXP}} ({{encounter.totalMonsters}} mob{{encounter.totalMonsters !== 1 ? 's' : ''}})
       <v-chip v-if="encounter.encounterXP >= challengeXp.deadly" color="red" dark>Deadly</v-chip>
       <v-chip v-else-if="encounter.encounterXP >= challengeXp.hard" color="orange" dark>Hard</v-chip>
       <v-chip v-else-if="encounter.encounterXP >= challengeXp.medium" color="yellow">Medium</v-chip>
       <v-chip v-else-if="encounter.encounterXP >= challengeXp.easy" color="green">Easy</v-chip>
     </h4>
-    <h5 color="#fff">
+    <h5>
       XP per player: {{encounter.playerXP}}XP
     </h5>
     <monster-card
