@@ -89,7 +89,7 @@ export const topDown = (monsters, xplimit, cursor = 0, reverse, cascade) => {
     }
   }
   return {
-    monsters: combineSameMonsters(group),
+    monsters: combineSameMonsters(group).sort((a, b) => b.xp - a.xp),
     encounterXP: Math.floor(totalXp * encounterMultiplier(multiplierShift, group.length)),
     playerXP: Math.floor(totalXp / totalPlayers),
     totalMonsters: group.length,
