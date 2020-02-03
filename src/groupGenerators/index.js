@@ -1,4 +1,5 @@
 import { encounterMultiplierLevels } from '../assets/json/encounterMultiplierLevels.json'
+import store from '../store'
 
 const randomItemFromArray = arr => arr[Math.floor(arr.length * Math.random())]
 
@@ -41,7 +42,11 @@ const combineSameMonsters = group => group.reduce((memo, monster) => {
   return memo
 }, [])
 
-export const topDown = (monsters, totalPlayers, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0, reverse, cascade) => {
+export const topDown = (monsters, xplimit, cursor = 0, reverse, cascade) => {
+  let { totalPlayers, maxPackSize, totalMonsters, multiplierShift } = store.state.filters
+  if (totalPlayers === 0) {
+    return {}
+  }
   let group = []
   const packsDone = []
   let totalXp = 0
@@ -52,7 +57,7 @@ export const topDown = (monsters, totalPlayers, xplimit, maxPackSize, maxTotalMo
   }
   let randomMonster
   while (cursor < monstersByXP.length && maxIterations--) {
-    if (group.length >= maxTotalMonsters) {
+    if (group.length >= totalMonsters) {
       break
     }
     const rowXp = monstersByXP[cursor].xp
@@ -92,10 +97,10 @@ export const topDown = (monsters, totalPlayers, xplimit, maxPackSize, maxTotalMo
   }
 }
 
-export const bottomUp = (monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
-  return topDown(monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, true)
+export const bottomUp = (monsters, xplimit, cursor = 0) => {
+  return topDown(monsters, xplimit, cursor, true)
 }
 
-export const cascade = (monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor = 0) => {
-  return topDown(monsters, partySize, xplimit, maxPackSize, maxTotalMonsters, multiplierShift, cursor, false, true)
+export const cascade = (monsters, xplimit, cursor) => {
+  return topDown(monsters, xplimit, cursor, false, true)
 }

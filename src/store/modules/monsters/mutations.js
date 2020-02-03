@@ -1,27 +1,27 @@
 import * as types from '../../types'
 import { cascade, topDown, bottomUp } from '../../../groupGenerators'
 
-const getEncounterGroups = (fn, filteredMonsters, totalPlayers, challengeXp, maxPackSize, totalMonsters, multiplierShift) => {
+const getEncounterGroups = (fn, filteredMonsters, challengeXp) => {
   const groups = []
   for (var i = 0; i < 10; i++) {
     groups.push({
-      id: `${fn.name}-maximum-${i}-${Math.random()}`, ...fn(filteredMonsters, totalPlayers, challengeXp.maximum, maxPackSize, totalMonsters, multiplierShift, i)
+      id: `${fn.name}-maximum-${i}-${Math.random()}`, ...fn(filteredMonsters, challengeXp.maximum, i)
     })
     groups.push({
-      id: `${fn.name}-deadly-${i}-${Math.random()}`, ...fn(filteredMonsters, totalPlayers, challengeXp.deadly, maxPackSize, totalMonsters, multiplierShift, i)
+      id: `${fn.name}-deadly-${i}-${Math.random()}`, ...fn(filteredMonsters, challengeXp.deadly, i)
     })
     groups.push({
-      id: `${fn.name}-hard-${i}-${Math.random()}`, ...fn(filteredMonsters, totalPlayers, challengeXp.hard, maxPackSize, totalMonsters, multiplierShift, i)
+      id: `${fn.name}-hard-${i}-${Math.random()}`, ...fn(filteredMonsters, challengeXp.hard, i)
     })
     groups.push({
-      id: `${fn.name}-medium-${i}-${Math.random()}`, ...fn(filteredMonsters, totalPlayers, challengeXp.medium, maxPackSize, totalMonsters, multiplierShift, i)
+      id: `${fn.name}-medium-${i}-${Math.random()}`, ...fn(filteredMonsters, challengeXp.medium, i)
     })
   }
   return groups
 }
 
 export default {
-  [types.MONSTERS_SET_FILTER] (state, { totalPlayers, challengeXp, environment, monsterType, maxPackSize, totalMonsters, query, multiplierShift }) {
+  [types.MONSTERS_SET_FILTER] (state, { environment, monsterType, query, challengeXp }) {
     const monsters = state.monsterList
     let filteredMonsters = monsters
     if (environment && environment !== 'Any') {
@@ -37,9 +37,9 @@ export default {
       .filter(m => m.xp <= challengeXp.deadly && m.xp > 0)
       .sort((a, b) => b.xp - a.xp)
 
-    const encounterGroups = getEncounterGroups(cascade, filteredMonsters, totalPlayers, challengeXp, maxPackSize, totalMonsters, multiplierShift)
-      .concat(getEncounterGroups(topDown, filteredMonsters, totalPlayers, challengeXp, maxPackSize, totalMonsters, multiplierShift))
-      .concat(getEncounterGroups(bottomUp, filteredMonsters, totalPlayers, challengeXp, maxPackSize, totalMonsters, multiplierShift))
+    const encounterGroups = getEncounterGroups(cascade, filteredMonsters, challengeXp)
+    .concat(getEncounterGroups(topDown, filteredMonsters, challengeXp))
+      .concat(getEncounterGroups(bottomUp, filteredMonsters, challengeXp))
       .filter(group => group.encounterXP >= (challengeXp.easy || 1))
       .reduce((memo, group) => {
         if (!memo.find(groupMem => groupMem.signature === group.signature)) {
